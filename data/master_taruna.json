@@ -1,0 +1,422 @@
+[
+  {
+    "no_taruna": "20241000",
+    "nama": "Dewi Pratama",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20241001",
+    "nama": "Eka Wijaya",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20221002",
+    "nama": "Tono Saputra",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20241003",
+    "nama": "Hana Permana",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20221004",
+    "nama": "Sari Saputra",
+    "blok": "B",
+    "kompi": "3",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20241005",
+    "nama": "Budi Santoso",
+    "blok": "B",
+    "kompi": "2",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20231006",
+    "nama": "Eka Kusuma",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20231007",
+    "nama": "Dewi Nugroho",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20221008",
+    "nama": "Oki Permana",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20231009",
+    "nama": "Joko Lestari",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20241010",
+    "nama": "Cahya Pratama",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20231011",
+    "nama": "Hana Wijaya",
+    "blok": "B",
+    "kompi": "2",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20231012",
+    "nama": "Lukman Santoso",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20241013",
+    "nama": "Indra Wijaya",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20231014",
+    "nama": "Hana Santoso",
+    "blok": "B",
+    "kompi": "2",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20241015",
+    "nama": "Sari Kusuma",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20231016",
+    "nama": "Andi Nugroho",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20221017",
+    "nama": "Tono Nugroho",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20231018",
+    "nama": "Oki Santoso",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20231019",
+    "nama": "Sari Permana",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20231020",
+    "nama": "Tono Saputra",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20221021",
+    "nama": "Putri Wijaya",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20241022",
+    "nama": "Fajar Saputra",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20241023",
+    "nama": "Umar Utami",
+    "blok": "B",
+    "kompi": "3",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20231024",
+    "nama": "Dewi Permana",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20221025",
+    "nama": "Joko Saputra",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20221026",
+    "nama": "Indra Permana",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20241027",
+    "nama": "Joko Permana",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20241028",
+    "nama": "Fajar Permana",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20221029",
+    "nama": "Putri Pratama",
+    "blok": "B",
+    "kompi": "2",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20241030",
+    "nama": "Andi Kusuma",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20241031",
+    "nama": "Putri Wijaya",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20221032",
+    "nama": "Putri Permana",
+    "blok": "B",
+    "kompi": "3",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20241033",
+    "nama": "Nur Kusuma",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20241034",
+    "nama": "Joko Saputra",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20221035",
+    "nama": "Rizki Utami",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20241036",
+    "nama": "Kirana Pratama",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20221037",
+    "nama": "Hana Pratama",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20221038",
+    "nama": "Hana Wijaya",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20241039",
+    "nama": "Hana Halim",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20241040",
+    "nama": "Eka Lestari",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20221041",
+    "nama": "Nur Kusuma",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20231042",
+    "nama": "Lukman Saputra",
+    "blok": "B",
+    "kompi": "3",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20231043",
+    "nama": "Dewi Pratama",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20221044",
+    "nama": "Hana Kusuma",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20231045",
+    "nama": "Nur Santoso",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20221046",
+    "nama": "Oki Permana",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20221047",
+    "nama": "Budi Wijaya",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20231048",
+    "nama": "Putri Kusuma",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20231049",
+    "nama": "Budi Saputra",
+    "blok": "B",
+    "kompi": "2",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20221050",
+    "nama": "Sari Utami",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20241051",
+    "nama": "Andi Lestari",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20221052",
+    "nama": "Kirana Pratama",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20221053",
+    "nama": "Rizki Santoso",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20221054",
+    "nama": "Cahya Lestari",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2023"
+  },
+  {
+    "no_taruna": "20221055",
+    "nama": "Dewi Lestari",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2022"
+  },
+  {
+    "no_taruna": "20231056",
+    "nama": "Umar Wijaya",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20231057",
+    "nama": "Rizki Nugroho",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20231058",
+    "nama": "Kirana Kusuma",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024"
+  },
+  {
+    "no_taruna": "20231059",
+    "nama": "Joko Utami",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2023"
+  }
+]

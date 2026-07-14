@@ -1,0 +1,1188 @@
+[
+  {
+    "id": 1,
+    "tanggal": "2026-06-24",
+    "no_taruna": "20221017",
+    "nama": "Tono Nugroho",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "batuk"
+    ],
+    "suhu": 36.8,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 2,
+    "tanggal": "2026-06-24",
+    "no_taruna": "20231006",
+    "nama": "Eka Kusuma",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2023",
+    "gejala": [
+      "mual"
+    ],
+    "suhu": 37.3,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 3,
+    "tanggal": "2026-06-24",
+    "no_taruna": "20241001",
+    "nama": "Eka Wijaya",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "batuk"
+    ],
+    "suhu": 37.0,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 4,
+    "tanggal": "2026-06-25",
+    "no_taruna": "20221038",
+    "nama": "Hana Wijaya",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "mual"
+    ],
+    "suhu": 36.9,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 5,
+    "tanggal": "2026-06-25",
+    "no_taruna": "20221041",
+    "nama": "Nur Kusuma",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2023",
+    "gejala": [
+      "batuk",
+      "pusing"
+    ],
+    "suhu": 37.7,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 6,
+    "tanggal": "2026-06-25",
+    "no_taruna": "20241051",
+    "nama": "Andi Lestari",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "nyeri tenggorokan"
+    ],
+    "suhu": 38.1,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 7,
+    "tanggal": "2026-06-26",
+    "no_taruna": "20231009",
+    "nama": "Joko Lestari",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "nyeri tenggorokan"
+    ],
+    "suhu": 37.2,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 8,
+    "tanggal": "2026-06-26",
+    "no_taruna": "20241005",
+    "nama": "Budi Santoso",
+    "blok": "B",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "demam",
+      "pilek"
+    ],
+    "suhu": 38.2,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 9,
+    "tanggal": "2026-06-26",
+    "no_taruna": "20221038",
+    "nama": "Hana Wijaya",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "nyeri tenggorokan",
+      "demam"
+    ],
+    "suhu": 38.0,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 10,
+    "tanggal": "2026-06-27",
+    "no_taruna": "20241034",
+    "nama": "Joko Saputra",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "pusing"
+    ],
+    "suhu": 36.7,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 11,
+    "tanggal": "2026-06-27",
+    "no_taruna": "20231018",
+    "nama": "Oki Santoso",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "mual",
+      "batuk"
+    ],
+    "suhu": 37.9,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 12,
+    "tanggal": "2026-06-28",
+    "no_taruna": "20231018",
+    "nama": "Oki Santoso",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "nyeri tenggorokan"
+    ],
+    "suhu": 37.0,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 13,
+    "tanggal": "2026-06-28",
+    "no_taruna": "20231006",
+    "nama": "Eka Kusuma",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2023",
+    "gejala": [
+      "pilek",
+      "pusing"
+    ],
+    "suhu": 37.8,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 14,
+    "tanggal": "2026-06-28",
+    "no_taruna": "20241023",
+    "nama": "Umar Utami",
+    "blok": "B",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "pilek"
+    ],
+    "suhu": 37.2,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 15,
+    "tanggal": "2026-06-28",
+    "no_taruna": "20231042",
+    "nama": "Lukman Saputra",
+    "blok": "B",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "diare",
+      "nyeri tenggorokan"
+    ],
+    "suhu": 37.8,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 16,
+    "tanggal": "2026-06-28",
+    "no_taruna": "20221038",
+    "nama": "Hana Wijaya",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "mual"
+    ],
+    "suhu": 38.0,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 17,
+    "tanggal": "2026-06-29",
+    "no_taruna": "20241010",
+    "nama": "Cahya Pratama",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2022",
+    "gejala": [
+      "pusing",
+      "pilek"
+    ],
+    "suhu": 38.5,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 18,
+    "tanggal": "2026-06-29",
+    "no_taruna": "20241040",
+    "nama": "Eka Lestari",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2023",
+    "gejala": [
+      "diare"
+    ],
+    "suhu": 37.1,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 19,
+    "tanggal": "2026-06-29",
+    "no_taruna": "20231049",
+    "nama": "Budi Saputra",
+    "blok": "B",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "batuk"
+    ],
+    "suhu": 38.1,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 20,
+    "tanggal": "2026-06-29",
+    "no_taruna": "20241051",
+    "nama": "Andi Lestari",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "pusing",
+      "pilek"
+    ],
+    "suhu": 36.6,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 21,
+    "tanggal": "2026-06-30",
+    "no_taruna": "20231045",
+    "nama": "Nur Santoso",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2022",
+    "gejala": [
+      "batuk",
+      "diare"
+    ],
+    "suhu": 37.5,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 22,
+    "tanggal": "2026-06-30",
+    "no_taruna": "20231056",
+    "nama": "Umar Wijaya",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2024",
+    "gejala": [
+      "batuk",
+      "pilek"
+    ],
+    "suhu": 36.8,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 23,
+    "tanggal": "2026-06-30",
+    "no_taruna": "20221047",
+    "nama": "Budi Wijaya",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "diare",
+      "mual"
+    ],
+    "suhu": 37.4,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 24,
+    "tanggal": "2026-06-30",
+    "no_taruna": "20221037",
+    "nama": "Hana Pratama",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "pilek",
+      "batuk"
+    ],
+    "suhu": 38.5,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 25,
+    "tanggal": "2026-06-30",
+    "no_taruna": "20221008",
+    "nama": "Oki Permana",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "demam",
+      "nyeri tenggorokan"
+    ],
+    "suhu": 38.2,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 26,
+    "tanggal": "2026-07-01",
+    "no_taruna": "20231009",
+    "nama": "Joko Lestari",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "nyeri tenggorokan"
+    ],
+    "suhu": 37.9,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 27,
+    "tanggal": "2026-07-01",
+    "no_taruna": "20221038",
+    "nama": "Hana Wijaya",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "pusing"
+    ],
+    "suhu": 37.3,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 28,
+    "tanggal": "2026-07-02",
+    "no_taruna": "20221035",
+    "nama": "Rizki Utami",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2022",
+    "gejala": [
+      "diare"
+    ],
+    "suhu": 37.9,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 29,
+    "tanggal": "2026-07-02",
+    "no_taruna": "20231043",
+    "nama": "Dewi Pratama",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2022",
+    "gejala": [
+      "nyeri tenggorokan",
+      "diare"
+    ],
+    "suhu": 37.2,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 30,
+    "tanggal": "2026-07-02",
+    "no_taruna": "20231018",
+    "nama": "Oki Santoso",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "batuk",
+      "pusing"
+    ],
+    "suhu": 36.5,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 31,
+    "tanggal": "2026-07-02",
+    "no_taruna": "20221046",
+    "nama": "Oki Permana",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2024",
+    "gejala": [
+      "mual",
+      "batuk"
+    ],
+    "suhu": 37.5,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 32,
+    "tanggal": "2026-07-02",
+    "no_taruna": "20231006",
+    "nama": "Eka Kusuma",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2023",
+    "gejala": [
+      "nyeri tenggorokan",
+      "diare"
+    ],
+    "suhu": 37.5,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 33,
+    "tanggal": "2026-07-03",
+    "no_taruna": "20231012",
+    "nama": "Lukman Santoso",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "pilek"
+    ],
+    "suhu": 38.0,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 34,
+    "tanggal": "2026-07-03",
+    "no_taruna": "20241034",
+    "nama": "Joko Saputra",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "mual"
+    ],
+    "suhu": 37.1,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 35,
+    "tanggal": "2026-07-03",
+    "no_taruna": "20241001",
+    "nama": "Eka Wijaya",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "pilek"
+    ],
+    "suhu": 38.3,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 36,
+    "tanggal": "2026-07-04",
+    "no_taruna": "20241003",
+    "nama": "Hana Permana",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "mual"
+    ],
+    "suhu": 38.4,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 37,
+    "tanggal": "2026-07-04",
+    "no_taruna": "20241005",
+    "nama": "Budi Santoso",
+    "blok": "B",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "nyeri tenggorokan",
+      "demam"
+    ],
+    "suhu": 38.5,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 38,
+    "tanggal": "2026-07-04",
+    "no_taruna": "20241034",
+    "nama": "Joko Saputra",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "batuk"
+    ],
+    "suhu": 37.8,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 39,
+    "tanggal": "2026-07-04",
+    "no_taruna": "20221035",
+    "nama": "Rizki Utami",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2022",
+    "gejala": [
+      "pilek"
+    ],
+    "suhu": 37.6,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 40,
+    "tanggal": "2026-07-05",
+    "no_taruna": "20221038",
+    "nama": "Hana Wijaya",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "batuk",
+      "mual"
+    ],
+    "suhu": 38.0,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 41,
+    "tanggal": "2026-07-05",
+    "no_taruna": "20221044",
+    "nama": "Hana Kusuma",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2022",
+    "gejala": [
+      "diare"
+    ],
+    "suhu": 37.1,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 42,
+    "tanggal": "2026-07-06",
+    "no_taruna": "20241028",
+    "nama": "Fajar Permana",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2023",
+    "gejala": [
+      "demam",
+      "batuk"
+    ],
+    "suhu": 36.9,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 43,
+    "tanggal": "2026-07-06",
+    "no_taruna": "20221021",
+    "nama": "Putri Wijaya",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "mual"
+    ],
+    "suhu": 37.6,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 44,
+    "tanggal": "2026-07-06",
+    "no_taruna": "20221037",
+    "nama": "Hana Pratama",
+    "blok": "C",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 36.6,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 45,
+    "tanggal": "2026-07-06",
+    "no_taruna": "20241040",
+    "nama": "Eka Lestari",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2023",
+    "gejala": [
+      "batuk"
+    ],
+    "suhu": 36.6,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 46,
+    "tanggal": "2026-07-06",
+    "no_taruna": "20221002",
+    "nama": "Tono Saputra",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2022",
+    "gejala": [
+      "demam",
+      "mual"
+    ],
+    "suhu": 37.0,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 47,
+    "tanggal": "2026-07-06",
+    "no_taruna": "20231042",
+    "nama": "Lukman Saputra",
+    "blok": "B",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "batuk",
+      "mual"
+    ],
+    "suhu": 36.8,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 48,
+    "tanggal": "2026-07-07",
+    "no_taruna": "20231059",
+    "nama": "Joko Utami",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2023",
+    "gejala": [
+      "batuk",
+      "pusing"
+    ],
+    "suhu": 38.1,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 49,
+    "tanggal": "2026-07-07",
+    "no_taruna": "20231012",
+    "nama": "Lukman Santoso",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 37.8,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 50,
+    "tanggal": "2026-07-07",
+    "no_taruna": "20241022",
+    "nama": "Fajar Saputra",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "pusing",
+      "nyeri tenggorokan"
+    ],
+    "suhu": 38.2,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 51,
+    "tanggal": "2026-07-08",
+    "no_taruna": "20221041",
+    "nama": "Nur Kusuma",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2023",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 37.3,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 52,
+    "tanggal": "2026-07-08",
+    "no_taruna": "20221021",
+    "nama": "Putri Wijaya",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "batuk"
+    ],
+    "suhu": 36.9,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 53,
+    "tanggal": "2026-07-08",
+    "no_taruna": "20241034",
+    "nama": "Joko Saputra",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "batuk",
+      "pusing"
+    ],
+    "suhu": 36.9,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 54,
+    "tanggal": "2026-07-08",
+    "no_taruna": "20221029",
+    "nama": "Putri Pratama",
+    "blok": "B",
+    "kompi": "2",
+    "angkatan": "2022",
+    "gejala": [
+      "nyeri tenggorokan"
+    ],
+    "suhu": 38.3,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 55,
+    "tanggal": "2026-07-08",
+    "no_taruna": "20241028",
+    "nama": "Fajar Permana",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2023",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 37.8,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 56,
+    "tanggal": "2026-07-08",
+    "no_taruna": "20241034",
+    "nama": "Joko Saputra",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 38.4,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 57,
+    "tanggal": "2026-07-09",
+    "no_taruna": "20221054",
+    "nama": "Cahya Lestari",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2023",
+    "gejala": [
+      "batuk"
+    ],
+    "suhu": 37.3,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 58,
+    "tanggal": "2026-07-09",
+    "no_taruna": "20241030",
+    "nama": "Andi Kusuma",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "nyeri tenggorokan"
+    ],
+    "suhu": 37.3,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 59,
+    "tanggal": "2026-07-09",
+    "no_taruna": "20241003",
+    "nama": "Hana Permana",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "pusing"
+    ],
+    "suhu": 36.5,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 60,
+    "tanggal": "2026-07-09",
+    "no_taruna": "20231024",
+    "nama": "Dewi Permana",
+    "blok": "C",
+    "kompi": "2",
+    "angkatan": "2022",
+    "gejala": [
+      "nyeri tenggorokan",
+      "pusing"
+    ],
+    "suhu": 37.1,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 61,
+    "tanggal": "2026-07-10",
+    "no_taruna": "20221050",
+    "nama": "Sari Utami",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2022",
+    "gejala": [
+      "batuk",
+      "nyeri tenggorokan"
+    ],
+    "suhu": 37.1,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 62,
+    "tanggal": "2026-07-10",
+    "no_taruna": "20241003",
+    "nama": "Hana Permana",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "diare"
+    ],
+    "suhu": 37.1,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 63,
+    "tanggal": "2026-07-10",
+    "no_taruna": "20241003",
+    "nama": "Hana Permana",
+    "blok": "A",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "mual",
+      "nyeri tenggorokan"
+    ],
+    "suhu": 36.8,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 64,
+    "tanggal": "2026-07-11",
+    "no_taruna": "20221032",
+    "nama": "Putri Permana",
+    "blok": "B",
+    "kompi": "3",
+    "angkatan": "2024",
+    "gejala": [
+      "nyeri tenggorokan"
+    ],
+    "suhu": 36.9,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 65,
+    "tanggal": "2026-07-12",
+    "no_taruna": "20241015",
+    "nama": "Sari Kusuma",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2022",
+    "gejala": [
+      "demam",
+      "mual"
+    ],
+    "suhu": 37.0,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 66,
+    "tanggal": "2026-07-12",
+    "no_taruna": "20221038",
+    "nama": "Hana Wijaya",
+    "blok": "B",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "mual"
+    ],
+    "suhu": 36.7,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 67,
+    "tanggal": "2026-07-13",
+    "no_taruna": "20231042",
+    "nama": "Lukman Saputra",
+    "blok": "B",
+    "kompi": "3",
+    "angkatan": "2022",
+    "gejala": [
+      "pilek",
+      "batuk"
+    ],
+    "suhu": 37.8,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 68,
+    "tanggal": "2026-07-13",
+    "no_taruna": "20231020",
+    "nama": "Tono Saputra",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "pilek"
+    ],
+    "suhu": 37.3,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 69,
+    "tanggal": "2026-07-14",
+    "no_taruna": "20231020",
+    "nama": "Tono Saputra",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 37.4,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 70,
+    "tanggal": "2026-07-14",
+    "no_taruna": "20241036",
+    "nama": "Kirana Pratama",
+    "blok": "C",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 37.6,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 71,
+    "tanggal": "2026-07-14",
+    "no_taruna": "20221032",
+    "nama": "Putri Permana",
+    "blok": "B",
+    "kompi": "3",
+    "angkatan": "2024",
+    "gejala": [
+      "batuk",
+      "pilek"
+    ],
+    "suhu": 38.3,
+    "urgensi": "periksa perawat",
+    "catatan": ""
+  },
+  {
+    "id": 72,
+    "tanggal": "2026-07-14",
+    "no_taruna": "20241022",
+    "nama": "Fajar Saputra",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2023",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 38.6,
+    "urgensi": "periksa dokter",
+    "catatan": "cluster demam"
+  },
+  {
+    "id": 73,
+    "tanggal": "2026-07-14",
+    "no_taruna": "20231020",
+    "nama": "Tono Saputra",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2024",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 38.7,
+    "urgensi": "periksa dokter",
+    "catatan": "cluster demam"
+  },
+  {
+    "id": 74,
+    "tanggal": "2026-07-14",
+    "no_taruna": "20221050",
+    "nama": "Sari Utami",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2022",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 39.1,
+    "urgensi": "periksa dokter",
+    "catatan": "cluster demam"
+  },
+  {
+    "id": 75,
+    "tanggal": "2026-07-14",
+    "no_taruna": "20231059",
+    "nama": "Joko Utami",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2023",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 39.5,
+    "urgensi": "periksa dokter",
+    "catatan": "cluster demam"
+  },
+  {
+    "id": 76,
+    "tanggal": "2026-07-14",
+    "no_taruna": "20231048",
+    "nama": "Putri Kusuma",
+    "blok": "A",
+    "kompi": "1",
+    "angkatan": "2023",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 38.0,
+    "urgensi": "periksa dokter",
+    "catatan": "cluster demam"
+  },
+  {
+    "id": 77,
+    "tanggal": "2026-07-14",
+    "no_taruna": "20221050",
+    "nama": "Sari Utami",
+    "blok": "A",
+    "kompi": "2",
+    "angkatan": "2022",
+    "gejala": [
+      "demam"
+    ],
+    "suhu": 38.4,
+    "urgensi": "periksa dokter",
+    "catatan": "cluster demam"
+  }
+]
