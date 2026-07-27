@@ -57,11 +57,18 @@ def buat_surat_sakit(nama, lama_istirahat, keterangan=""):
     return buat_surat(nama_lengkap, int(lama_istirahat), keterangan=keterangan)
 
 
+VALID_DIMENSI = {"blok", "kompi", "angkatan"}
+
+
 def cek_anomali(periode=None, dimensi=None):
     kunjungan = storage.load_kunjungan()
     config = storage.load_config()
+    # LLM kadang mengirim dimensi sebagai string gabungan ("blok, kompi, angkatan").
+    # Parse robust: pisah koma, saring nilai valid; kosong -> default semua.
     if isinstance(dimensi, str):
-        dimensi = [dimensi]
+        dimensi = [d.strip().lower() for d in dimensi.split(",")]
+    if dimensi:
+        dimensi = [d for d in dimensi if d in VALID_DIMENSI] or None
     alerts = deteksi_anomali(kunjungan, config, dimensi=dimensi)
     if not alerts:
         return "Tidak terdeteksi anomali/klaster gejala di atas ambang saat ini."
@@ -165,12 +172,11 @@ TOOLS = [
         "type": "function",
         "function": {
             "name": "cek_anomali",
-            "description": "Deteksi lonjakan/klaster gejala per blok/kompi/angkatan untuk peringatan dini wabah.",
+            "description": "Deteksi lonjakan/klaster gejala per blok/kompi/angkatan untuk peringatan dini wabah. Panggil tanpa argumen untuk memeriksa semua dimensi.",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "periode": {"type": "string", "description": "Tanggal (opsional, default hari ini)"},
-                    "dimensi": {"type": "string", "description": "blok, kompi, atau angkatan (opsional, default semua)"},
+                    "dimensi": {"type": "string", "description": "Salah satu dari: blok, kompi, angkatan. Kosongkan untuk memeriksa semua."},
                 },
                 "required": [],
             },
@@ -184,7 +190,7 @@ TOOLS = [
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "tanggal": {"type": "string", "description": "Tanggal YYYY-MM-DD (opsional, default hari ini)"},
+                    "tanggal": {"type": "string", "description": "Tanggal YYYY-MM-DD. Kosongkan untuk hari ini; isi HANYA jika pengguna menyebut tanggal tertentu."},
                 },
                 "required": [],
             },

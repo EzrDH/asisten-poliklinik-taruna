@@ -40,6 +40,18 @@ def test_cek_anomali_mendeteksi_lonjakan(tmp_path):
     assert "klaster" in hasil.lower() or "A" in hasil
 
 
+def test_cek_anomali_dimensi_string_gabungan(tmp_path):
+    # LLM kadang mengirim "blok, kompi, angkatan" sebagai satu string.
+    hari_ini = date.today().isoformat()
+    kunjungan = [{"id": i, "tanggal": hari_ini, "no_taruna": "x", "nama": "x",
+                  "blok": "A", "kompi": "1", "angkatan": "2023",
+                  "gejala": ["demam"], "suhu": 38.0, "urgensi": "x",
+                  "catatan": ""} for i in range(6)]
+    _setup(tmp_path, kunjungan)
+    hasil = tools.cek_anomali(dimensi="blok, kompi, angkatan")
+    assert "klaster" in hasil.lower()
+
+
 def test_riwayat_pasien(tmp_path):
     hari_ini = date.today().isoformat()
     kunjungan = [{"id": 1, "tanggal": hari_ini, "no_taruna": "2023045",

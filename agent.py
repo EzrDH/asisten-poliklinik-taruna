@@ -9,25 +9,29 @@ SYSTEM_PROMPT = (
     "membuat surat keterangan sakit, memeriksa anomali/klaster gejala (potensi wabah), "
     "membuat rekap harian, dan menampilkan riwayat pasien. "
     "JANGAN mendiagnosis penyakit atau memberi resep obat; itu wewenang tenaga kesehatan. "
+    "Untuk parameter tanggal/periode yang opsional, JANGAN mengarang nilainya; "
+    "biarkan kosong kecuali pengguna menyebut tanggal tertentu. "
     "Jawab ringkas, jelas, dan dalam Bahasa Indonesia."
 )
 
 
 def chat(user_message, history=None, max_iter=5):
+    history = history or []
     messages = [{"role": "system", "content": SYSTEM_PROMPT}]
-    messages += (history or [])
+    messages += history
     messages.append({"role": "user", "content": user_message})
 
+    reply = "Maaf, terlalu banyak langkah. Coba perjelas permintaan."
     for _ in range(max_iter):
         resp = ollama.chat(model=MODEL, messages=messages, tools=T.TOOLS)
         msg = resp.message
+        # Simpan objek pesan asisten apa adanya agar tool_calls tetap tertaut
+        # ke hasil tool -> model membaca output tool dengan benar.
+        messages.append(msg)
         tool_calls = getattr(msg, "tool_calls", None)
-        messages.append({
-            "role": "assistant",
-            "content": msg.content or "",
-        })
         if not tool_calls:
-            return msg.content or "", messages
+            reply = msg.content or ""
+            break
         for call in tool_calls:
             nama = call.function.name
             args = call.function.arguments or {}
@@ -41,4 +45,8 @@ def chat(user_message, history=None, max_iter=5):
                     hasil = f"Error menjalankan {nama}: {e}"
             messages.append({"role": "tool", "name": nama, "content": str(hasil)})
 
-    return "Maaf, terlalu banyak langkah. Coba perjelas permintaan.", messages
+    new_history = history + [
+        {"role": "user", "content": user_message},
+        {"role": "assistant", "content": reply},
+    ]
+    return reply, new_history
