@@ -8,7 +8,7 @@ Berisi: checklist persiapan, alur paparan, skrip demo langkah-demi-langkah
 
 ## ✅ Checklist Persiapan (lakukan 10 menit sebelum paparan)
 
-- [ ] Ollama berjalan → cek `ollama list` memuat `qwen3:8b`
+- [ ] Ollama berjalan → cek `ollama list` memuat `qwen3:4b` (ringan, muat di GPU 6 GB)
 - [ ] **Re-seed data hari ini** → `python seed_data.py`
       (penting: lonjakan wabah menempel ke tanggal hari-H, jadi "Ada wabah?" langsung menyala)
 - [ ] Jalankan app → `streamlit run app.py` → buka **http://localhost:8501**
@@ -16,9 +16,12 @@ Berisi: checklist persiapan, alur paparan, skrip demo langkah-demi-langkah
 - [ ] Buka terminal kedua, siapkan `pytest -v` (untuk tunjukkan bukti pengujian)
 - [ ] Perbesar font browser & terminal agar terbaca dari jauh
 
-> ⏱️ **Catatan penting:** model lokal 8B butuh ~10–40 detik per jawaban.
-> Ini **normal**. Manfaatkan jeda itu untuk menjelaskan apa yang sedang terjadi
-> ("sekarang LLM sedang memutuskan tool mana yang dipanggil...").
+> ⏱️ **Catatan penting:** model lokal butuh beberapa detik (~5–20 dtk untuk
+> qwen3:4b) per jawaban. Ini **normal**. Manfaatkan jeda itu untuk menjelaskan apa
+> yang sedang terjadi ("sekarang LLM sedang memutuskan tool mana yang dipanggil...").
+>
+> 💾 **Model & GPU:** GPU 6 GB VRAM cocok dengan **qwen3:4b**. `qwen3:8b` bisa
+> kehabisan VRAM & membuat Ollama crash saat browser terbuka — hindari untuk demo.
 
 ---
 
@@ -177,7 +180,8 @@ git log --oneline  # riwayat pengembangan bertahap (13 commit)
 
 | Gejala | Penyebab & Solusi Cepat |
 |--------|-------------------------|
-| Jawaban lama muncul | Normal untuk model 8B (~10–40 dtk). Jelaskan sambil menunggu. |
+| Jawaban lama muncul | Normal untuk model lokal (~5–20 dtk). Jelaskan sambil menunggu. |
+| Error CUDA / Ollama crash | VRAM penuh (jangan pakai qwen3:8b di GPU 6 GB). Pakai `qwen3:4b`. |
 | "Ada wabah?" bilang tidak ada | Belum re-seed hari ini → jalankan `python seed_data.py`, refresh app. |
 | LLM tidak memanggil tool / salah jawab | Ulangi dengan kalimat lebih spesifik & tegas (sebut aksinya jelas). |
 | App error / tak mau jalan | Tunjukkan `pytest -v` (28 lulus) sebagai bukti logika bekerja, lalu restart app. |

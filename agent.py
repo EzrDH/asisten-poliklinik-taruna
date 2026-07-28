@@ -1,8 +1,12 @@
+import os
+
 import ollama
 
 import tools as T
 
-MODEL = "qwen3:8b"
+# Model bisa diganti tanpa mengubah kode: set env POLIKLINIK_MODEL.
+# Default qwen3:4b agar muat nyaman di GPU 6 GB (qwen3:8b rawan kehabisan VRAM).
+MODEL = os.environ.get("POLIKLINIK_MODEL", "qwen3:4b")
 SYSTEM_PROMPT = (
     "Anda adalah asisten poliklinik taruna untuk PETUGAS klinik. "
     "Gunakan tool yang tersedia untuk: mencatat kunjungan, menilai urgensi (triase), "
@@ -23,7 +27,15 @@ def chat(user_message, history=None, max_iter=5):
 
     reply = "Maaf, terlalu banyak langkah. Coba perjelas permintaan."
     for _ in range(max_iter):
-        resp = ollama.chat(model=MODEL, messages=messages, tools=T.TOOLS)
+        try:
+            resp = ollama.chat(model=MODEL, messages=messages, tools=T.TOOLS)
+        except Exception as e:  # noqa: BLE001
+            reply = (
+                "⚠️ Maaf, model AI sedang tidak bisa diakses. Kemungkinan memori "
+                "GPU penuh atau Ollama belum berjalan. Coba lagi, atau pakai model "
+                f"lebih ringan (mis. qwen3:4b). Detail teknis: {e}"
+            )
+            break
         msg = resp.message
         # Simpan objek pesan asisten apa adanya agar tool_calls tetap tertaut
         # ke hasil tool -> model membaca output tool dengan benar.

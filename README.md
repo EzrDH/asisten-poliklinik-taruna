@@ -7,7 +7,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
 ![Tests](https://img.shields.io/badge/tests-28%20passed-brightgreen)
-![LLM](https://img.shields.io/badge/LLM-Ollama%20qwen3%3A8b-orange)
+![LLM](https://img.shields.io/badge/LLM-Ollama%20qwen3%3A4b-orange)
 ![UI](https://img.shields.io/badge/UI-Streamlit-red)
 ![Data](https://img.shields.io/badge/data-100%25%20sintetis-lightgrey)
 
@@ -168,7 +168,8 @@ e-poliklinik/
 pip install -r requirements.txt
 
 # 2. Siapkan model LLM lokal (mendukung tool-calling)
-ollama pull qwen3:8b        # alternatif ringan: qwen3:4b
+ollama pull qwen3:4b        # ringan (~2.6 GB), muat di GPU 6 GB VRAM
+# Ganti model tanpa edit kode:  set POLIKLINIK_MODEL=qwen3:8b  (butuh VRAM >= 8 GB)
 
 # 3. Buat data dummy (jalankan di hari demo agar lonjakan di tanggal terbaru)
 python seed_data.py
@@ -230,7 +231,7 @@ pytest -v
 
 | Komponen | Pilihan |
 |----------|---------|
-| LLM | Ollama + `qwen3:8b` (tool-calling, lokal) |
+| LLM | Ollama + `qwen3:4b` (tool-calling, lokal; muat di GPU 6 GB) |
 | Orkestrasi | Library `ollama` (Python) |
 | Analitik | `pandas`, `numpy` |
 | Penyimpanan | File JSON (tanpa server) |
