@@ -38,6 +38,12 @@ bergerak + z-score (`z >= 2` dan `c_t >= 3`). Lihat `surveilans.py`.
 pytest -v
 ```
 
+## Tips demo
+`cek_anomali` memeriksa **tanggal terbaru** di data. `seed_data.py` menyuntik
+lonjakan demam di Blok A pada **hari saat seed dijalankan**. Jadi **jalankan
+`python seed_data.py` di hari demo** agar lonjakan jatuh pada tanggal terbaru dan
+"Ada potensi wabah?" langsung menampilkan klaster.
+
 ## Catatan model
 Jika balasan tidak memanggil tool, pastikan Ollama versi terbaru dan model
 mendukung tool-calling (`qwen3:8b`/`qwen3:4b`). Ganti nama model di
