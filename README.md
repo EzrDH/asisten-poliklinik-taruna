@@ -69,7 +69,7 @@ tindakan** melalui alat, bukan hanya menghasilkan teks.
 flowchart LR
     P["👤 Petugas Klinik"] -->|chat| UI["🖥️ Streamlit UI<br/>app.py"]
     UI <--> AG["🧠 agent.py<br/>(orkestrasi)"]
-    AG <-->|tool-calling| LLM["🤖 Ollama<br/>qwen3:8b"]
+    AG <-->|tool-calling| LLM["🤖 Ollama<br/>qwen3:4b"]
     AG -->|memanggil| T["🛠️ tools.py<br/>(6 tool)"]
     T --> TR["triase.py"]
     T --> SR["surat.py"]
@@ -330,7 +330,7 @@ e-poliklinik/
 ├── storage.py        # baca/tulis data JSON
 ├── seed_data.py      # generator data dummy (master + kunjungan)
 ├── data/             # master_taruna.json, kunjungan.json, config.json
-├── tests/            # 89 unit test (pytest)
+├── tests/            # 99 unit test (pytest)
 ├── EVALUASI.md       # laporan perbandingan metode (dibuat otomatis)
 ├── MODEL_CARD.md     # dokumentasi model terlatih (dibuat otomatis)
 ├── .github/workflows/ci.yml  # CI: test + evaluasi + pelatihan model
