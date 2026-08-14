@@ -6,7 +6,7 @@
 > metode anomali statistik.
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
-![Tests](https://img.shields.io/badge/tests-73%20passed-brightgreen)
+![Tests](https://img.shields.io/badge/tests-89%20passed-brightgreen)
 ![CI](https://github.com/EzrDH/asisten-poliklinik-taruna/actions/workflows/ci.yml/badge.svg)
 ![LLM](https://img.shields.io/badge/LLM-Ollama%20qwen3%3A4b-orange)
 ![UI](https://img.shields.io/badge/UI-Streamlit-red)
@@ -191,6 +191,71 @@ python evaluasi.py     # mencetak tabel & menulis EVALUASI.md
 
 ---
 
+## 🤖 Model Terlatih vs Statistik Klasik (supervised learning)
+
+Pertanyaan lanjutan: **apakah model yang _belajar dari data_ mengalahkan
+surveilans statistik klasik?** Dijawab dengan eksperimen, bukan asumsi
+(`klasifikasi.py`).
+
+**Rancangan agar hasilnya sah — tiga jebakan yang sengaja dihindari:**
+
+| Jebakan umum | Cara dihindari di sini |
+|--------------|------------------------|
+| **Sirkular** - model hanya meniru aturan sendiri | Label = wabah yang **benar-benar disuntikkan** ke data, bukan keluaran detektor. Model & statistik dinilai terhadap kebenaran yang sama dan independen. |
+| **Kebocoran data** (leakage) | Latih pada seed `[0-5]`, uji pada seed `[100-104]` yang **belum pernah dilihat**. Penalaan hiperparameter (GridSearchCV 5-fold) hanya menyentuh data latih. |
+| **Perbandingan tak adil** | Fitur model dihitung dari **informasi yang sama** yang tersedia bagi detektor statistik (`surveilans.ringkasan_statistik`). |
+
+**Hasil pada data uji (seed yang tak pernah dilatih):**
+
+| Pendekatan | Precision | Recall | F1 |
+|------------|-----------|--------|----|
+| **ML: Random Forest** | 0.827 | 0.931 | **0.876** |
+| ML: Regresi Logistik | 0.731 | 0.944 | 0.824 |
+| Statistik: Poisson | 0.713 | 0.848 | 0.773 |
+| Statistik: Ambang tetap | 0.637 | 0.942 | 0.760 |
+| Statistik: z-score | 0.750 | 0.752 | 0.748 |
+| Statistik: robust | 0.576 | 0.922 | 0.709 |
+
+**Model terlatih unggul +0.10 F1** atas detektor statistik terbaik.
+
+### Mengapa model bisa lebih baik? (interpretabilitas)
+
+Bobot regresi logistik menunjukkan model mempelajari sesuatu yang tidak dimiliki
+detektor satu-variabel:
+
+```
+c_t (+2.60)   rasio_mu (+1.70)   rasio_total (-1.31)   proporsi (+0.92)
+```
+
+Perhatikan **`rasio_total` bernilai negatif**: model belajar bahwa hari dengan
+lonjakan kunjungan *menyeluruh* justru **lebih kecil** kemungkinannya wabah -
+itulah "hari ramai" yang sengaja disuntikkan sebagai pengecoh. Detektor
+statistik klasik hanya melihat jumlah kasus satu gejala, sehingga tertipu.
+Model menggabungkan **konteks** (proporsi & total kunjungan) - inilah sumber
+keunggulannya, dan alasannya dapat dijelaskan, bukan kotak hitam.
+
+### Mengapa sistem tetap memakai Poisson sebagai default?
+
+Keputusan rekayasa yang sengaja berbeda dari "yang skornya paling tinggi":
+
+- Model terlatih **butuh data historis berlabel** - di poliklinik nyata, label
+  "hari ini benar wabah" hampir tak pernah tersedia rapi.
+- Detektor statistik **langsung jalan tanpa pelatihan** dan tetap masuk akal
+  saat data sedikit.
+- Karena itu ML diposisikan sebagai **jalur peningkatan** yang aktif bila data
+  berlabel tersedia, bukan sebagai ketergantungan.
+
+Reproduksi (tanpa LLM, dijalankan juga di CI tiap push):
+
+```bash
+python klasifikasi.py    # melatih, menguji, menulis MODEL_CARD.md
+```
+
+Dokumentasi model lengkap beserta keterbatasannya:
+[MODEL_CARD.md](MODEL_CARD.md).
+
+---
+
 ## 🧠 Inti Machine Learning: Deteksi Anomali Statistik
 
 Metode **surveilans sindromik**: membandingkan jumlah kasus hari ini dengan
@@ -240,12 +305,14 @@ e-poliklinik/
 ├── surat.py          # generator surat keterangan sakit
 ├── surveilans.py     # 4 metode deteksi anomali            ← inti ML
 ├── evaluasi.py       # harness metrik P/R/F1 + tuning      ← inti ML
+├── klasifikasi.py    # model terlatih (logreg & RF) + banding ← inti ML
 ├── storage.py        # baca/tulis data JSON
 ├── seed_data.py      # generator data dummy (master + kunjungan)
 ├── data/             # master_taruna.json, kunjungan.json, config.json
-├── tests/            # 73 unit test (pytest)
-├── EVALUASI.md       # laporan hasil evaluasi (dibuat otomatis)
-├── .github/workflows/ci.yml  # CI: test + evaluasi tiap push
+├── tests/            # 89 unit test (pytest)
+├── EVALUASI.md       # laporan perbandingan metode (dibuat otomatis)
+├── MODEL_CARD.md     # dokumentasi model terlatih (dibuat otomatis)
+├── .github/workflows/ci.yml  # CI: test + evaluasi + pelatihan model
 └── requirements.txt
 ```
 
@@ -294,11 +361,11 @@ pytest -v
 ```
 
 ```
-73 passed
+89 passed
 ```
 
-Angka **73** adalah jumlah *test case* yang dijalankan pytest, berasal dari
-**58 fungsi test** - sebagian memakai `@pytest.mark.parametrize` sehingga satu
+Angka **89** adalah jumlah *test case* yang dijalankan pytest, berasal dari
+**73 fungsi test** - sebagian memakai `@pytest.mark.parametrize` sehingga satu
 fungsi diuji untuk beberapa metode/nilai sekaligus.
 
 Seluruh test berjalan **tanpa memerlukan Ollama/LLM** (agent diuji dengan mock),
@@ -312,6 +379,7 @@ sehingga dapat dijalankan otomatis di CI pada tiap push.
 | `surveilans.py` (inti ML) | 3 |
 | `surveilans.py` - pemilihan metode | 20 |
 | `evaluasi.py` (metrik & tuning) | 25 |
+| `klasifikasi.py` (model terlatih) | 16 |
 | `seed_data.py` | 3 |
 | `tools.py` | 6 |
 | `agent.py` (mock) | 2 |

@@ -121,6 +121,41 @@ _UJI = {
 }
 
 
+def ringkasan_statistik(kunjungan, dim, grup, gejala, tanggal, config):
+    """Statistik mentah satu (tanggal, grup, gejala) terhadap baseline-nya.
+
+    Dipakai bersama oleh detektor statistik dan oleh ekstraksi fitur model
+    terlatih (`klasifikasi.py`), agar keduanya melihat informasi yang sama
+    dan perbandingannya adil.
+    """
+    baseline_hari = config.get("baseline_hari", 14)
+    t = date.fromisoformat(tanggal)
+    window = [(t - timedelta(days=i)).isoformat() for i in range(1, baseline_hari + 1)]
+
+    per_hari = _per_hari(kunjungan, dim, grup, gejala)
+    counts = [per_hari.get(d, 0) for d in window]
+    c_t = per_hari.get(tanggal, 0)
+    mu, sigma = _statistik_baseline(counts)
+    med = _median(counts)
+    mad = _median([abs(c - med) for c in counts])
+
+    # Total kunjungan grup itu (semua gejala) - membedakan wabah spesifik dari
+    # hari yang sekadar ramai.
+    total_hari_ini = sum(1 for k in kunjungan
+                         if k.get(dim) == grup and k["tanggal"] == tanggal)
+    total_baseline = [
+        sum(1 for k in kunjungan if k.get(dim) == grup and k["tanggal"] == d)
+        for d in window
+    ]
+    mu_total, _ = _statistik_baseline(total_baseline)
+
+    return {
+        "c_t": c_t, "mu": mu, "sigma": sigma, "median": med, "mad": mad,
+        "total_hari_ini": total_hari_ini, "mu_total": mu_total,
+        "counts": counts,
+    }
+
+
 def deteksi_anomali(kunjungan, config, tanggal=None, dimensi=None, metode="zscore"):
     """Deteksi klaster gejala pada satu tanggal.
 

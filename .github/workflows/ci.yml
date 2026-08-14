@@ -38,9 +38,16 @@ jobs:
         # direproduksi. Tidak memerlukan LLM/Ollama - murni deterministik.
         run: python evaluasi.py
 
-      - name: Unggah laporan evaluasi
+      - name: Latih & bandingkan model ML vs detektor statistik
+        # Melatih ulang model dari nol dan mengujinya pada seed terpisah,
+        # membuktikan hasil di MODEL_CARD.md dapat direproduksi.
+        run: python klasifikasi.py
+
+      - name: Unggah laporan evaluasi & model card
         if: matrix.python-version == '3.12'
         uses: actions/upload-artifact@v4
         with:
           name: laporan-evaluasi
-          path: EVALUASI.md
+          path: |
+            EVALUASI.md
+            MODEL_CARD.md
