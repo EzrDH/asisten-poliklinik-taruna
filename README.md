@@ -6,10 +6,12 @@
 > metode anomali statistik.
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
-![Tests](https://img.shields.io/badge/tests-28%20passed-brightgreen)
+![Tests](https://img.shields.io/badge/tests-73%20passed-brightgreen)
+![CI](https://github.com/EzrDH/asisten-poliklinik-taruna/actions/workflows/ci.yml/badge.svg)
 ![LLM](https://img.shields.io/badge/LLM-Ollama%20qwen3%3A4b-orange)
 ![UI](https://img.shields.io/badge/UI-Streamlit-red)
 ![Data](https://img.shields.io/badge/data-100%25%20sintetis-lightgrey)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 Proyek mata kuliah **Machine Learning** — Politeknik Siber dan Sandi Negara (Poltek SSN).
 
@@ -112,6 +114,83 @@ LLM memilih tool yang tepat sesuai maksud kalimat petugas:
 
 ---
 
+## 🔍 Apa yang deterministik, apa yang LLM?
+
+Pemisahan ini disengaja: **keputusan yang harus dapat dipertanggungjawabkan
+tidak diserahkan ke LLM.** LLM hanya menerjemahkan maksud kalimat menjadi
+pemanggilan tool; seluruh angka, keputusan urgensi, dan alarm wabah dihitung
+oleh kode deterministik yang dapat diuji.
+
+| Komponen | Deterministik | LLM | Keterangan |
+|----------|:-------------:|:---:|------------|
+| Pemilihan tool & argumen dari kalimat petugas | | ✅ | Satu-satunya peran LLM |
+| Perumusan jawaban natural | | ✅ | Berdasarkan keluaran tool, bukan pengetahuan model |
+| Pencarian data taruna, penyimpanan kunjungan | ✅ | | `storage.py`, `tools.py` |
+| Penilaian urgensi (triase) | ✅ | | `triase.py` - aturan eksplisit, bukan tebakan model |
+| Deteksi klaster/wabah | ✅ | | `surveilans.py` - statistik murni |
+| Penyusunan surat keterangan sakit | ✅ | | `surat.py` - templat tetap |
+| Rekap & riwayat | ✅ | | Agregasi langsung dari JSON |
+
+Konsekuensinya: **hasil deteksi wabah tidak berubah walau model LLM diganti**,
+dan seluruh logika inti dapat diuji tanpa menyalakan LLM sama sekali (73 unit
+test berjalan tanpa Ollama).
+
+---
+
+## 📏 Evaluasi Kuantitatif Detektor Wabah
+
+Klaim "sistem mendeteksi wabah" tidak cukup diucapkan - ia harus **diukur**.
+`evaluasi.py` membangkitkan dataset sintetis **berlabel** (kita tahu persis hari
+& blok mana yang benar-benar wabah), lalu membandingkan empat metode deteksi
+pada kondisi yang sama.
+
+Agar tugasnya realistis, dataset sengaja dibuat sulit: gejala wabah (`demam`)
+**juga muncul sebagai keluhan harian biasa**, dan terdapat **hari ramai tanpa
+wabah** (mis. sehabis kegiatan lapangan) sebagai sumber alarm palsu.
+
+**Hasil (5 dataset x 60 hari, konfigurasi default):**
+
+| Metode | Precision | Recall | F1 |
+|--------|-----------|--------|----|
+| `threshold` - Ambang kasus tetap (baseline naif) | 0.710 | 0.955 | **0.809** |
+| `poisson` - Uji Poisson satu sisi | 0.715 | 0.933 | 0.800 |
+| `robust` - z-score robust (median + MAD) | 0.604 | 0.975 | 0.733 |
+| `zscore` - z-score klasik | 0.684 | 0.690 | 0.667 |
+
+**Setelah penalaan parameter:** `threshold` 0.858 · `poisson` 0.828 ·
+`robust` 0.797 · `zscore` 0.775.
+
+### Temuan jujur & keputusan yang diambil
+
+1. **z-score klasik justru paling lemah** (recall 0.690). Penyebabnya: wabah
+   lama di jendela baseline menaikkan rata-rata *dan* simpangan baku, sehingga
+   wabah baru tenggelam. Ini terlihat hanya setelah diukur.
+2. Karena itu ditambahkan **`robust` (median + MAD)** yang tahan outlier -
+   recall melonjak ke 0.975, dengan konsekuensi lebih banyak alarm palsu.
+3. **Ambang tetap unggul tipis**, tetapi ia harus dikalibrasi manual per lokasi
+   dan tidak menyesuaikan diri terhadap perubahan populasi.
+4. **Keputusan: metode default sistem diubah ke `poisson`** (F1 0.828, hanya
+   0.03 di bawah ambang tetap) karena adaptif terhadap baseline tiap
+   blok/kompi/angkatan dan memberi **p-value** yang dapat ditafsirkan petugas.
+
+Metode dapat diganti tanpa mengubah kode, lewat `data/config.json`:
+
+```json
+{ "metode": "poisson", "p_ambang": 0.05, "z_ambang": 2.0, "threshold_kasus": 4 }
+```
+
+Reproduksi hasil (tanpa perlu LLM):
+
+```bash
+python evaluasi.py     # mencetak tabel & menulis EVALUASI.md
+```
+
+> ⚠️ Angka di atas berlaku pada **data sintetis** dengan asumsi yang
+> didokumentasikan di `evaluasi.py` - bukan klaim akurasi pada data poliklinik
+> nyata. Laporan lengkap: [EVALUASI.md](EVALUASI.md).
+
+---
+
 ## 🧠 Inti Machine Learning: Deteksi Anomali Statistik
 
 Metode **surveilans sindromik**: membandingkan jumlah kasus hari ini dengan
@@ -126,9 +205,19 @@ z         = (c_t − μ) / σ
 FLAG "potensi klaster" bila  z ≥ 2  DAN  c_t ≥ 3
 ```
 
-- **z-score** dipilih karena *explainable* dan jalan dengan data sedang.
-- Ambang `c_t ≥ 3` mencegah alarm palsu saat angka kecil.
-- Disediakan pula fungsi **uji Poisson** sebagai pembanding (di `surveilans.py`).
+Rumus di atas adalah metode `zscore`. Tersedia empat metode yang seluruhnya
+*explainable* dan dapat dibandingkan secara kuantitatif:
+
+| Metode | Statistik uji | Memicu alarm bila |
+|--------|---------------|-------------------|
+| `zscore` | rata-rata & simpangan baku | `z ≥ z_ambang` |
+| `robust` | median & MAD (tahan outlier) | `z_robust ≥ z_ambang` |
+| `poisson` **(default)** | `P(X ≥ c_t \| λ=μ)` | `p < p_ambang` |
+| `threshold` | jumlah kasus mentah | `c_t ≥ threshold_kasus` |
+
+- Semua metode tetap disaring `c_t ≥ c_min` agar angka kecil tidak memicu alarm.
+- Pemilihan default (`poisson`) **didasarkan bukti**, bukan selera - lihat
+  [bagian evaluasi](#-evaluasi-kuantitatif-detektor-wabah).
 
 **Contoh keluaran nyata** (lonjakan demam di Blok A terdeteksi):
 
@@ -149,11 +238,14 @@ e-poliklinik/
 ├── tools.py          # 6 tool agentic + skema untuk LLM
 ├── triase.py         # aturan klasifikasi urgensi
 ├── surat.py          # generator surat keterangan sakit
-├── surveilans.py     # deteksi anomali (z-score + Poisson)  ← inti ML
+├── surveilans.py     # 4 metode deteksi anomali            ← inti ML
+├── evaluasi.py       # harness metrik P/R/F1 + tuning      ← inti ML
 ├── storage.py        # baca/tulis data JSON
 ├── seed_data.py      # generator data dummy (master + kunjungan)
 ├── data/             # master_taruna.json, kunjungan.json, config.json
-├── tests/            # 28 unit test (pytest)
+├── tests/            # 73 unit test (pytest)
+├── EVALUASI.md       # laporan hasil evaluasi (dibuat otomatis)
+├── .github/workflows/ci.yml  # CI: test + evaluasi tiap push
 └── requirements.txt
 ```
 
@@ -202,8 +294,11 @@ pytest -v
 ```
 
 ```
-28 passed
+73 passed
 ```
+
+Seluruh test berjalan **tanpa memerlukan Ollama/LLM** (agent diuji dengan mock),
+sehingga dapat dijalankan otomatis di CI pada tiap push.
 
 | Modul | Test |
 |-------|------|
@@ -211,6 +306,8 @@ pytest -v
 | `triase.py` | 7 |
 | `surat.py` | 3 |
 | `surveilans.py` (inti ML) | 3 |
+| `surveilans.py` - pemilihan metode | 20 |
+| `evaluasi.py` (metrik & tuning) | 25 |
 | `seed_data.py` | 3 |
 | `tools.py` | 6 |
 | `agent.py` (mock) | 2 |

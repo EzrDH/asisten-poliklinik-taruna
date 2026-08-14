@@ -1,5 +1,8 @@
 {
+  "metode": "poisson",
   "baseline_hari": 14,
   "z_ambang": 2.0,
-  "c_min": 3
+  "c_min": 3,
+  "p_ambang": 0.05,
+  "threshold_kasus": 4
 }

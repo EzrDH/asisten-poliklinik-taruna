@@ -50,11 +50,18 @@ with col_dash:
                  .fillna(0))
         st.bar_chart(pivot)
 
-        alerts = deteksi_anomali(kunjungan, storage.load_config())
+        config = storage.load_config()
+        metode = config.get("metode", "poisson")
+        alerts = deteksi_anomali(kunjungan, config, metode=metode)
+        st.caption(f"Metode deteksi: `{metode}` (lihat EVALUASI.md untuk "
+                   "perbandingan kuantitatif antar metode)")
         if alerts:
             for a in alerts:
+                skor = (f"p={a['p_value']:.4f}" if "p_value" in a
+                        else f"z={a['z']}" if "z" in a
+                        else f"ambang={a.get('ambang')}")
                 st.error(f"⚠️ {a['dimensi'].capitalize()} {a['grup']}: "
                          f"{a['c_t']} kasus '{a['gejala']}' "
-                         f"(baseline {a['mu']}±{a['sigma']}, z={a['z']})")
+                         f"(baseline {a['mu']}±{a['sigma']}, {skor})")
         else:
             st.success("Tidak ada anomali terdeteksi.")

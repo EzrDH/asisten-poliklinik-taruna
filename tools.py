@@ -60,6 +60,15 @@ def buat_surat_sakit(nama, lama_istirahat, keterangan=""):
 VALID_DIMENSI = {"blok", "kompi", "angkatan"}
 
 
+def _skor_teks(alert):
+    """Ringkas skor alert sesuai metode yang dipakai."""
+    if "p_value" in alert:
+        return f"p={alert['p_value']:.4f}"
+    if "z" in alert:
+        return f"z={alert['z']}"
+    return f"ambang={alert.get('ambang')}"
+
+
 def cek_anomali(periode=None, dimensi=None):
     kunjungan = storage.load_kunjungan()
     config = storage.load_config()
@@ -69,16 +78,18 @@ def cek_anomali(periode=None, dimensi=None):
         dimensi = [d.strip().lower() for d in dimensi.split(",")]
     if dimensi:
         dimensi = [d for d in dimensi if d in VALID_DIMENSI] or None
-    alerts = deteksi_anomali(kunjungan, config, dimensi=dimensi)
+    metode = config.get("metode", "poisson")
+    alerts = deteksi_anomali(kunjungan, config, dimensi=dimensi, metode=metode)
     if not alerts:
-        return "Tidak terdeteksi anomali/klaster gejala di atas ambang saat ini."
+        return (f"Tidak terdeteksi anomali/klaster gejala di atas ambang saat ini "
+                f"(metode {metode}).")
     baris = [
         f"⚠️ {a['dimensi'].capitalize()} {a['grup']}: {a['c_t']} kasus "
-        f"'{a['gejala']}' (baseline {a['mu']}±{a['sigma']}, z={a['z']}) "
+        f"'{a['gejala']}' (baseline {a['mu']}±{a['sigma']}, {_skor_teks(a)}) "
         f"pada {a['tanggal']}"
         for a in alerts
     ]
-    return "Potensi klaster terdeteksi:\n" + "\n".join(baris)
+    return f"Potensi klaster terdeteksi (metode {metode}):\n" + "\n".join(baris)
 
 
 def rekap_harian(tanggal=None):

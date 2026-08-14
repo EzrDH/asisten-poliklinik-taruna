@@ -2,7 +2,17 @@ import json
 from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
-DEFAULT_CONFIG = {"baseline_hari": 14, "z_ambang": 2.0, "c_min": 3}
+# Metode default dipilih berdasarkan hasil evaluasi kuantitatif (lihat
+# EVALUASI.md): Poisson memberi F1 hampir setara ambang tetap namun adaptif
+# terhadap baseline tiap lokasi, sehingga tidak perlu kalibrasi manual.
+DEFAULT_CONFIG = {
+    "metode": "poisson",
+    "baseline_hari": 14,
+    "z_ambang": 2.0,
+    "c_min": 3,
+    "p_ambang": 0.05,
+    "threshold_kasus": 4,
+}
 
 
 def _path(name):
