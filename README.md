@@ -297,6 +297,10 @@ pytest -v
 73 passed
 ```
 
+Angka **73** adalah jumlah *test case* yang dijalankan pytest, berasal dari
+**58 fungsi test** - sebagian memakai `@pytest.mark.parametrize` sehingga satu
+fungsi diuji untuk beberapa metode/nilai sekaligus.
+
 Seluruh test berjalan **tanpa memerlukan Ollama/LLM** (agent diuji dengan mock),
 sehingga dapat dijalankan otomatis di CI pada tiap push.
 
