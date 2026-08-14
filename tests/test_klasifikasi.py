@@ -10,9 +10,16 @@ from klasifikasi import (
     buat_model,
     ekstrak_fitur,
     evaluasi_model,
+    format_ketidakpastian,
     format_perbandingan,
     kepentingan_fitur,
     latih_model,
+    metrik_per_seed,
+    metrik_statistik_per_seed,
+    ringkas_metrik,
+    roc_auc_fitur,
+    roc_auc_model,
+    uji_berpasangan,
 )
 
 SEED_CEPAT = [0]  # satu dataset saja agar test tetap ringan
@@ -125,6 +132,72 @@ def test_ct_termasuk_fitur_paling_berpengaruh():
     """Sanity check: jumlah kasus hari ini wajib jadi sinyal utama."""
     model = latih_model("logreg", seeds=SEED_CEPAT, cv=2)
     assert "c_t" in [n for n, _ in kepentingan_fitur(model)[:5]]
+
+
+# --- Ketidakpastian, signifikansi, ROC-AUC --------------------------------
+
+def test_ringkas_metrik_hitungan_benar():
+    daftar = [{"f1": 0.6}, {"f1": 0.8}, {"f1": 1.0}]
+    r = ringkas_metrik(daftar)
+    assert r["mean"] == pytest.approx(0.8)
+    assert r["std"] == pytest.approx(0.2)   # simpangan baku sampel
+    assert (r["min"], r["max"], r["n"]) == (0.6, 1.0, 3)
+
+
+def test_ringkas_metrik_satu_data_std_nol():
+    assert ringkas_metrik([{"f1": 0.7}])["std"] == 0.0
+
+
+def test_metrik_per_seed_satu_baris_tiap_dataset():
+    model = latih_model("logreg", seeds=SEED_CEPAT, cv=2)
+    hasil = metrik_per_seed(model, seeds=[100, 101])
+    assert len(hasil) == 2
+    assert all("f1" in h for h in hasil)
+
+
+def test_metrik_statistik_per_seed_satu_baris_tiap_dataset():
+    hasil = metrik_statistik_per_seed("poisson", seeds=[100, 101])
+    assert len(hasil) == 2
+
+
+def test_uji_berpasangan_unggul_konsisten():
+    a = [{"f1": 0.9}, {"f1": 0.85}, {"f1": 0.88}]
+    b = [{"f1": 0.7}, {"f1": 0.72}, {"f1": 0.69}]
+    u = uji_berpasangan(a, b)
+    assert u["selisih_rata"] > 0
+    assert u["menang"] == 3
+    assert u["signifikan"] is True
+
+
+def test_uji_berpasangan_tanpa_beda_tidak_signifikan():
+    sama = [{"f1": 0.8}, {"f1": 0.7}, {"f1": 0.9}]
+    u = uji_berpasangan(sama, list(sama))
+    assert u["selisih_rata"] == 0
+    assert u["signifikan"] is False
+
+
+def test_uji_berpasangan_menolak_pasangan_timpang():
+    with pytest.raises(ValueError):
+        uji_berpasangan([{"f1": 0.8}], [{"f1": 0.7}, {"f1": 0.6}])
+
+
+def test_roc_auc_model_lebih_baik_dari_acak():
+    model = latih_model("logreg", seeds=SEED_CEPAT, cv=2)
+    auc = roc_auc_model(model, seeds=[100])
+    assert 0.5 < auc <= 1.0   # 0.5 = setara tebakan acak
+
+
+def test_roc_auc_fitur_valid_dan_menolak_fitur_asing():
+    assert 0.0 <= roc_auc_fitur("c_t", seeds=[100]) <= 1.0
+    with pytest.raises(ValueError):
+        roc_auc_fitur("fitur_khayalan", seeds=[100])
+
+
+def test_format_ketidakpastian_memuat_kolom_penting():
+    ringkasan = {"ML: rf": {"mean": 0.85, "std": 0.05, "min": 0.8,
+                            "max": 0.9, "n": 5}}
+    tabel = format_ketidakpastian(ringkasan, {"ML: rf": 0.99})
+    assert "ROC-AUC" in tabel and "ML: rf" in tabel and "0.990" in tabel
 
 
 # --- Pelaporan ------------------------------------------------------------

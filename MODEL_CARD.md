@@ -10,7 +10,7 @@ surveilans statistik klasik untuk mendeteksi klaster wabah di asrama taruna?
 - Sumber: dataset **sintetis berlabel** (`evaluasi.buat_dataset_berlabel`).
 - Label: wabah yang benar-benar disuntikkan - **bukan** keluaran aturan/detektor,
   sehingga tidak terjadi penalaran melingkar.
-- Latih: seed [0, 1, 2, 3, 4, 5] - Uji: seed [100, 101, 102, 103, 104] (terpisah, tanpa kebocoran).
+- Latih: seed [0, 1, 2, 3, 4, 5] - Uji: seed [100, 101, 102, 103, 104, 105, 106, 107, 108, 109] (terpisah, tanpa kebocoran).
 - Unit data: pasangan (tanggal, blok); gejala target `demam`.
 
 ## Fitur (11)
@@ -28,16 +28,45 @@ Seluruh fitur berasal dari informasi yang juga tersedia bagi detektor statistik
 
 | Pendekatan | Precision | Recall | F1 | Akurasi |
 |------------|-----------|--------|----|---------|
-| ML: rf | 0.827 | 0.931 | **0.876** | 0.972 |
-| ML: logreg | 0.731 | 0.944 | **0.824** | 0.958 |
-| Statistik: poisson | 0.713 | 0.848 | **0.773** | 0.949 |
-| Statistik: threshold | 0.637 | 0.942 | **0.760** | 0.939 |
-| Statistik: zscore | 0.750 | 0.752 | **0.748** | 0.949 |
-| Statistik: robust | 0.576 | 0.922 | **0.709** | 0.923 |
+| ML: rf | 0.784 | 0.944 | **0.856** | 0.967 |
+| ML: logreg | 0.698 | 0.944 | **0.802** | 0.952 |
+| Statistik: poisson | 0.712 | 0.874 | **0.781** | 0.951 |
+| Statistik: threshold | 0.633 | 0.938 | **0.755** | 0.938 |
+| Statistik: zscore | 0.741 | 0.745 | **0.740** | 0.947 |
+| Statistik: robust | 0.600 | 0.941 | **0.731** | 0.929 |
 
-**Terbaik: ML: rf (F1 0.876).**
+**Terbaik: ML: rf (F1 0.856).**
 
 Hiperparameter terpilih: `logreg`: {'klas__C': 1.0}, `rf`: {'klas__max_depth': 5, 'klas__n_estimators': 100}
+
+## Ketidakpastian hasil
+
+Satu angka rata-rata bisa menyesatkan. Tabel berikut melaporkan **sebaran F1
+antar 10 dataset uji** (rata-rata ± simpangan baku sampel) serta
+**ROC-AUC**, yang menilai mutu peringkat tanpa dipengaruhi pemilihan ambang.
+
+| Pendekatan | F1 rata-rata ± SB | Rentang F1 | ROC-AUC |
+|------------|-------------------|------------|---------|
+| ML: rf | 0.856 ± 0.054 | 0.778 - 0.968 | 0.992 |
+| ML: logreg | 0.803 ± 0.063 | 0.710 - 0.909 | 0.991 |
+| Statistik: poisson | 0.781 ± 0.081 | 0.667 - 0.938 | 0.981 |
+| Statistik: threshold | 0.755 ± 0.042 | 0.692 - 0.821 | 0.985 |
+| Statistik: zscore | 0.740 ± 0.096 | 0.600 - 0.903 | 0.969 |
+| Statistik: robust | 0.731 ± 0.068 | 0.593 - 0.839 | 0.974 |
+
+## Uji signifikansi (berpasangan)
+
+Membandingkan **ML: rf** dengan **Statistik: poisson** pada dataset uji yang sama
+persis (uji-t berpasangan atas F1):
+
+- Selisih rata-rata F1: **+0.075**
+- Menang di **7 dari 10** dataset
+- t = 3.184, p = 0.0111 -> **signifikan** pada alfa 0,05
+
+Uji dilakukan berpasangan karena kedua pendekatan dinilai pada dataset yang
+sama, sehingga variasi antar-dataset tidak mencemari perbandingan. Dengan
+n = 10, hasil ini tetap perlu dibaca hati-hati: signifikansi statistik
+pada data sintetis bukan jaminan keunggulan di lapangan.
 
 ## Fitur paling berpengaruh
 - **logreg**: `c_t` (+2.60), `rasio_mu` (+1.70), `rasio_total` (-1.31), `proporsi` (+0.92), `log_p_poisson` (-0.91)

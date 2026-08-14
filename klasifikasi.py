@@ -22,8 +22,10 @@ Jalankan: ``python klasifikasi.py``
 """
 import math
 
+from scipy.stats import ttest_rel
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
@@ -39,8 +41,10 @@ from evaluasi import (
 from surveilans import METODE_TERSEDIA, p_poisson_atas, ringkasan_statistik
 
 # Seed dataset untuk latih dan uji - terpisah tegas agar tidak bocor.
+# Data uji diperbanyak menjadi 10 dataset agar rata-rata, simpangan baku, dan
+# uji signifikansi punya daya statistik yang memadai.
 SEED_LATIH = [0, 1, 2, 3, 4, 5]
-SEED_UJI = [100, 101, 102, 103, 104]
+SEED_UJI = list(range(100, 110))
 
 NAMA_FITUR = [
     "c_t",              # jumlah kasus gejala target hari ini
@@ -167,6 +171,96 @@ def evaluasi_statistik_pada_uji(seeds=None, config=None):
     return hasil
 
 
+def metrik_per_seed(model, seeds=None, config=None):
+    """Metrik model untuk TIAP dataset uji secara terpisah.
+
+    Melaporkan hasil per dataset (bukan hanya rata-rata) memungkinkan
+    penghitungan simpangan baku dan uji berpasangan.
+    """
+    return [evaluasi_model(model, seeds=[s], config=config)
+            for s in (seeds or SEED_UJI)]
+
+
+def metrik_statistik_per_seed(metode, seeds=None, config=None):
+    """Metrik detektor statistik untuk tiap dataset uji secara terpisah."""
+    hasil = []
+    for seed in (seeds or SEED_UJI):
+        kunjungan, label = buat_dataset_berlabel(seed=seed)
+        hasil.append(evaluasi_metode(kunjungan, label, metode, config))
+    return hasil
+
+
+def ringkas_metrik(daftar, kunci="f1"):
+    """Rata-rata, simpangan baku (sampel), dan rentang satu metrik."""
+    nilai = [d[kunci] for d in daftar]
+    n = len(nilai)
+    rata = sum(nilai) / n if n else 0.0
+    if n > 1:
+        var = sum((v - rata) ** 2 for v in nilai) / (n - 1)  # simpangan sampel
+    else:
+        var = 0.0
+    return {"mean": rata, "std": math.sqrt(var), "n": n,
+            "min": min(nilai) if nilai else 0.0,
+            "max": max(nilai) if nilai else 0.0}
+
+
+def uji_berpasangan(daftar_a, daftar_b, kunci="f1"):
+    """Uji-t berpasangan: apakah selisih A - B konsisten, bukan kebetulan?
+
+    Berpasangan karena kedua pendekatan dinilai pada **dataset uji yang sama**,
+    sehingga variasi antar-dataset tidak mencemari perbandingan.
+    """
+    a = [d[kunci] for d in daftar_a]
+    b = [d[kunci] for d in daftar_b]
+    if len(a) != len(b):
+        raise ValueError("Jumlah pasangan tidak sama; perbandingan tidak sah.")
+
+    selisih = [x - y for x, y in zip(a, b)]
+    n = len(selisih)
+    rata = sum(selisih) / n if n else 0.0
+    menang = sum(1 for d in selisih if d > 0)
+
+    t_stat, p_value = ttest_rel(a, b) if n > 1 else (0.0, 1.0)
+    if p_value != p_value:  # NaN saat seluruh selisih identik
+        t_stat, p_value = 0.0, 1.0
+
+    return {"selisih_rata": rata, "t": float(t_stat), "p": float(p_value),
+            "n": n, "menang": menang, "signifikan": bool(p_value < 0.05)}
+
+
+def _skor_dan_label(seeds, config=None):
+    """Kumpulkan fitur & label untuk perhitungan ROC-AUC."""
+    config = config or CONFIG_EVALUASI
+    X, y = [], []
+    for seed in seeds or SEED_UJI:
+        kunjungan, label = buat_dataset_berlabel(seed=seed)
+        for tanggal in _hari_evaluasi(kunjungan, config["baseline_hari"]):
+            for blok in BLOK:
+                X.append(ekstrak_fitur(kunjungan, blok, tanggal, config))
+                y.append(1 if (tanggal, blok) in label else 0)
+    return X, y
+
+
+def roc_auc_model(model, seeds=None, config=None):
+    """ROC-AUC model - mutu peringkat, terlepas dari ambang keputusan."""
+    X, y = _skor_dan_label(seeds, config)
+    skor = model.predict_proba(X)[:, 1]
+    return float(roc_auc_score(y, skor))
+
+
+def roc_auc_fitur(nama_fitur, seeds=None, config=None):
+    """ROC-AUC bila satu statistik dipakai langsung sebagai skor peringkat.
+
+    Memungkinkan perbandingan model vs statistik klasik tanpa dipengaruhi
+    pemilihan ambang.
+    """
+    if nama_fitur not in NAMA_FITUR:
+        raise ValueError(f"Fitur '{nama_fitur}' tidak dikenal.")
+    idx = NAMA_FITUR.index(nama_fitur)
+    X, y = _skor_dan_label(seeds, config)
+    return float(roc_auc_score(y, [baris[idx] for baris in X]))
+
+
 def kepentingan_fitur(model):
     """Kembalikan bobot/kepentingan fitur agar model tetap dapat dijelaskan."""
     inti = model.best_estimator_.named_steps["klas"]
@@ -194,17 +288,54 @@ def format_perbandingan(hasil_statistik, hasil_model):
     return "\n".join(baris)
 
 
+def format_ketidakpastian(ringkasan, auc):
+    """Tabel rata-rata +- simpangan baku F1 antar dataset uji, plus ROC-AUC."""
+    baris = [
+        "| Pendekatan | F1 rata-rata ± SB | Rentang F1 | ROC-AUC |",
+        "|------------|-------------------|------------|---------|",
+    ]
+    for nama, r in sorted(ringkasan.items(), key=lambda x: x[1]["mean"],
+                          reverse=True):
+        nilai_auc = f"{auc[nama]:.3f}" if nama in auc else "-"
+        baris.append(
+            f"| {nama} | {r['mean']:.3f} ± {r['std']:.3f} "
+            f"| {r['min']:.3f} - {r['max']:.3f} | {nilai_auc} |"
+        )
+    return "\n".join(baris)
+
+
 def main(tulis_laporan=True):
     hasil_model = {}
     penjelasan = {}
+    per_seed = {}
+    auc = {}
     for nama in ("logreg", "rf"):
         model = latih_model(nama)
         hasil_model[nama] = evaluasi_model(model)
         hasil_model[nama]["param_terbaik"] = model.best_params_
         penjelasan[nama] = kepentingan_fitur(model)[:5]
+        per_seed[f"ML: {nama}"] = metrik_per_seed(model)
+        auc[f"ML: {nama}"] = roc_auc_model(model)
 
     hasil_statistik = evaluasi_statistik_pada_uji()
     tabel = format_perbandingan(hasil_statistik, hasil_model)
+
+    # Ketidakpastian & mutu peringkat untuk detektor statistik.
+    for metode in METODE_TERSEDIA:
+        per_seed[f"Statistik: {metode}"] = metrik_statistik_per_seed(metode)
+    auc["Statistik: poisson"] = roc_auc_fitur("log_p_poisson")
+    auc["Statistik: zscore"] = roc_auc_fitur("z")
+    auc["Statistik: robust"] = roc_auc_fitur("z_robust")
+    auc["Statistik: threshold"] = roc_auc_fitur("c_t")
+
+    ringkasan = {nama: ringkas_metrik(d) for nama, d in per_seed.items()}
+    tabel_ketidakpastian = format_ketidakpastian(ringkasan, auc)
+
+    # Uji berpasangan: model terbaik melawan detektor statistik terbaik.
+    nama_ml = max(("ML: logreg", "ML: rf"), key=lambda n: ringkasan[n]["mean"])
+    nama_stat = max((f"Statistik: {m}" for m in METODE_TERSEDIA),
+                    key=lambda n: ringkasan[n]["mean"])
+    uji = uji_berpasangan(per_seed[nama_ml], per_seed[nama_stat])
 
     juara = max(
         [(f"ML: {n}", m) for n, m in hasil_model.items()]
@@ -251,6 +382,28 @@ Seluruh fitur berasal dari informasi yang juga tersedia bagi detektor statistik
 
 Hiperparameter terpilih: {", ".join(f"`{n}`: {m['param_terbaik']}" for n, m in hasil_model.items())}
 
+## Ketidakpastian hasil
+
+Satu angka rata-rata bisa menyesatkan. Tabel berikut melaporkan **sebaran F1
+antar {len(SEED_UJI)} dataset uji** (rata-rata ± simpangan baku sampel) serta
+**ROC-AUC**, yang menilai mutu peringkat tanpa dipengaruhi pemilihan ambang.
+
+{tabel_ketidakpastian}
+
+## Uji signifikansi (berpasangan)
+
+Membandingkan **{nama_ml}** dengan **{nama_stat}** pada dataset uji yang sama
+persis (uji-t berpasangan atas F1):
+
+- Selisih rata-rata F1: **{uji['selisih_rata']:+.3f}**
+- Menang di **{uji['menang']} dari {uji['n']}** dataset
+- t = {uji['t']:.3f}, p = {uji['p']:.4f} -> {"**signifikan** pada alfa 0,05" if uji['signifikan'] else "**belum signifikan** pada alfa 0,05"}
+
+Uji dilakukan berpasangan karena kedua pendekatan dinilai pada dataset yang
+sama, sehingga variasi antar-dataset tidak mencemari perbandingan. Dengan
+n = {uji['n']}, hasil ini tetap perlu dibaca hati-hati: signifikansi statistik
+pada data sintetis bukan jaminan keunggulan di lapangan.
+
 ## Fitur paling berpengaruh
 {baris_fitur}
 
@@ -272,7 +425,8 @@ tidak menggantikan penilaian tenaga kesehatan.
         with open("MODEL_CARD.md", "w", encoding="utf-8") as f:
             f.write(laporan)
         print("Model card ditulis ke MODEL_CARD.md")
-    return {"model": hasil_model, "statistik": hasil_statistik}
+    return {"model": hasil_model, "statistik": hasil_statistik,
+            "ringkasan": ringkasan, "auc": auc, "uji": uji}
 
 
 if __name__ == "__main__":

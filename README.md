@@ -6,7 +6,7 @@
 > metode anomali statistik.
 
 ![Python](https://img.shields.io/badge/Python-3.12-blue)
-![Tests](https://img.shields.io/badge/tests-89%20passed-brightgreen)
+![Tests](https://img.shields.io/badge/tests-99%20passed-brightgreen)
 ![CI](https://github.com/EzrDH/asisten-poliklinik-taruna/actions/workflows/ci.yml/badge.svg)
 ![LLM](https://img.shields.io/badge/LLM-Ollama%20qwen3%3A4b-orange)
 ![UI](https://img.shields.io/badge/UI-Streamlit-red)
@@ -205,18 +205,39 @@ surveilans statistik klasik?** Dijawab dengan eksperimen, bukan asumsi
 | **Kebocoran data** (leakage) | Latih pada seed `[0-5]`, uji pada seed `[100-104]` yang **belum pernah dilihat**. Penalaan hiperparameter (GridSearchCV 5-fold) hanya menyentuh data latih. |
 | **Perbandingan tak adil** | Fitur model dihitung dari **informasi yang sama** yang tersedia bagi detektor statistik (`surveilans.ringkasan_statistik`). |
 
-**Hasil pada data uji (seed yang tak pernah dilatih):**
+**Hasil pada 10 dataset uji (seed yang tak pernah dilatih):**
 
-| Pendekatan | Precision | Recall | F1 |
-|------------|-----------|--------|----|
-| **ML: Random Forest** | 0.827 | 0.931 | **0.876** |
-| ML: Regresi Logistik | 0.731 | 0.944 | 0.824 |
-| Statistik: Poisson | 0.713 | 0.848 | 0.773 |
-| Statistik: Ambang tetap | 0.637 | 0.942 | 0.760 |
-| Statistik: z-score | 0.750 | 0.752 | 0.748 |
-| Statistik: robust | 0.576 | 0.922 | 0.709 |
+Dilaporkan dengan **ketidakpastian** (simpangan baku antar dataset) dan
+**ROC-AUC** - bukan satu angka tunggal yang mudah menyesatkan.
 
-**Model terlatih unggul +0.10 F1** atas detektor statistik terbaik.
+| Pendekatan | Precision | Recall | F1 (rata-rata ± SB) | ROC-AUC |
+|------------|-----------|--------|---------------------|---------|
+| **ML: Random Forest** | 0.784 | 0.944 | **0.856 ± 0.054** | **0.992** |
+| ML: Regresi Logistik | 0.698 | 0.944 | 0.803 ± 0.063 | 0.991 |
+| Statistik: Poisson | 0.712 | 0.874 | 0.781 ± 0.081 | 0.981 |
+| Statistik: Ambang tetap | 0.633 | 0.938 | 0.755 ± 0.042 | 0.985 |
+| Statistik: z-score | 0.741 | 0.745 | 0.740 ± 0.096 | 0.969 |
+| Statistik: robust | 0.600 | 0.941 | 0.731 ± 0.068 | 0.974 |
+
+### Apakah keunggulannya nyata atau kebetulan?
+
+Diuji, tidak diasumsikan - **uji-t berpasangan** Random Forest vs Poisson pada
+dataset uji yang **sama persis** (berpasangan agar variasi antar-dataset tidak
+mencemari perbandingan):
+
+| Ukuran | Nilai |
+|--------|-------|
+| Selisih rata-rata F1 | **+0.075** |
+| Menang | **7 dari 10** dataset |
+| Statistik uji | t = 3.184, **p = 0.0111** |
+| Kesimpulan | **Signifikan** pada alfa = 0,05 |
+
+Perhatikan juga **simpangan baku**: Poisson (±0.081) dan z-score (±0.096) jauh
+lebih tidak stabil antar dataset dibanding Random Forest (±0.054) - model
+terlatih bukan hanya lebih tinggi, tetapi juga **lebih konsisten**.
+
+> Catatan kehati-hatian: n = 10 dataset **sintetis**. Signifikansi statistik di
+> sini tidak otomatis berarti unggul di lapangan.
 
 ### Mengapa model bisa lebih baik? (interpretabilitas)
 
@@ -361,11 +382,11 @@ pytest -v
 ```
 
 ```
-89 passed
+99 passed
 ```
 
-Angka **89** adalah jumlah *test case* yang dijalankan pytest, berasal dari
-**73 fungsi test** - sebagian memakai `@pytest.mark.parametrize` sehingga satu
+Angka **99** adalah jumlah *test case* yang dijalankan pytest, berasal dari
+**83 fungsi test** - sebagian memakai `@pytest.mark.parametrize` sehingga satu
 fungsi diuji untuk beberapa metode/nilai sekaligus.
 
 Seluruh test berjalan **tanpa memerlukan Ollama/LLM** (agent diuji dengan mock),
@@ -379,7 +400,7 @@ sehingga dapat dijalankan otomatis di CI pada tiap push.
 | `surveilans.py` (inti ML) | 3 |
 | `surveilans.py` - pemilihan metode | 20 |
 | `evaluasi.py` (metrik & tuning) | 25 |
-| `klasifikasi.py` (model terlatih) | 16 |
+| `klasifikasi.py` (model, ketidakpastian, AUC) | 26 |
 | `seed_data.py` | 3 |
 | `tools.py` | 6 |
 | `agent.py` (mock) | 2 |
